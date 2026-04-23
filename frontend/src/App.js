@@ -18,12 +18,7 @@ const Navigation = () => {
     <nav className="glass-nav fixed top-0 left-0 right-0 z-50" data-testid="navigation">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <a href="#hero" className="flex items-center gap-2" data-testid="nav-logo">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-            <MessageSquare className="w-4 h-4 text-white" strokeWidth={2} />
-          </div>
-          <span className="font-bold text-xl tracking-tight text-slate-900" style={{ fontFamily: 'var(--font-heading)' }}>
-            EaseTalk
-          </span>
+          <img src="/easetalk-logo.png" alt="EaseTalk Logo" className="h-12 w-auto" />
         </a>
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((l) => (
@@ -513,12 +508,7 @@ const Footer = () => (
       <div className="flex flex-col items-center text-center gap-8">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-            <MessageSquare className="w-4 h-4 text-white" strokeWidth={2} />
-          </div>
-          <span className="font-bold text-xl tracking-tight text-slate-900" style={{ fontFamily: 'var(--font-heading)' }}>
-            EaseTalk
-          </span>
+          <img src="/easetalk-logo.png" alt="EaseTalk Logo" className="h-12 w-auto" />
         </div>
 
         {/* Links */}
