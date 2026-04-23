@@ -1,37 +1,77 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { MessageSquare, Bell, Hand, Sparkles, Shield, Globe, Zap, Heart, Mail, ExternalLink, ArrowRight, Play, Volume2, Languages } from "lucide-react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { MessageSquare, Bell, Hand, Sparkles, Shield, Globe, Zap, Heart, Mail, ExternalLink, ArrowRight, Play, Volume2, Languages, Menu, X } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import "@/App.css";
 
 /* ───────────────────────────── NAVIGATION ───────────────────────────── */
-const Navigation = () => (
-  <nav className="glass-nav fixed top-0 left-0 right-0 z-50" data-testid="navigation">
-    <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-      <a href="#hero" className="flex items-center gap-2" data-testid="nav-logo">
-        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-          <MessageSquare className="w-4 h-4 text-white" strokeWidth={2} />
+const Navigation = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const navLinks = [
+    { href: "#apps", label: "Apps" },
+    { href: "#why", label: "Why EaseTalk" },
+    { href: "#innovation", label: "Innovation" },
+    { href: "#contact", label: "Contact" },
+  ];
+
+  return (
+    <nav className="glass-nav fixed top-0 left-0 right-0 z-50" data-testid="navigation">
+      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <a href="#hero" className="flex items-center gap-2" data-testid="nav-logo">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+            <MessageSquare className="w-4 h-4 text-white" strokeWidth={2} />
+          </div>
+          <span className="font-bold text-xl tracking-tight text-slate-900" style={{ fontFamily: 'var(--font-heading)' }}>
+            EaseTalk
+          </span>
+        </a>
+        <div className="hidden md:flex items-center gap-8">
+          {navLinks.map((l) => (
+            <a key={l.href} href={l.href} className="text-sm text-slate-500 hover:text-slate-900 transition-colors" data-testid={`nav-${l.label.toLowerCase().replace(/\s+/g, '-')}`}>{l.label}</a>
+          ))}
         </div>
-        <span className="font-bold text-xl tracking-tight text-slate-900" style={{ fontFamily: 'var(--font-heading)' }}>
-          EaseTalk
-        </span>
-      </a>
-      <div className="hidden md:flex items-center gap-8">
-        <a href="#apps" className="text-sm text-slate-500 hover:text-slate-900 transition-colors" data-testid="nav-apps">Apps</a>
-        <a href="#why" className="text-sm text-slate-500 hover:text-slate-900 transition-colors" data-testid="nav-why">Why EaseTalk</a>
-        <a href="#innovation" className="text-sm text-slate-500 hover:text-slate-900 transition-colors" data-testid="nav-innovation">Innovation</a>
-        <a href="#contact" className="text-sm text-slate-500 hover:text-slate-900 transition-colors" data-testid="nav-contact">Contact</a>
+        <div className="flex items-center gap-3">
+          <a
+            href="#contact"
+            className="hidden sm:inline-flex bg-slate-900 text-white text-sm font-medium px-5 py-2.5 rounded-full hover:bg-slate-800 active:scale-95 transition-all"
+            data-testid="nav-cta"
+          >
+            Get Early Access
+          </a>
+          <button
+            className="md:hidden p-2 rounded-xl hover:bg-slate-100 transition-colors"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            data-testid="mobile-menu-toggle"
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <X className="w-5 h-5 text-slate-700" /> : <Menu className="w-5 h-5 text-slate-700" />}
+          </button>
+        </div>
       </div>
-      <a
-        href="#hero"
-        className="bg-slate-900 text-white text-sm font-medium px-5 py-2.5 rounded-full hover:bg-slate-800 active:scale-95 transition-all"
-        data-testid="nav-cta"
-      >
-        Get Early Access
-      </a>
-    </div>
-  </nav>
-);
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden border-t border-slate-100 bg-white/95 backdrop-blur-xl"
+            data-testid="mobile-menu"
+          >
+            <div className="px-6 py-4 flex flex-col gap-3">
+              {navLinks.map((l) => (
+                <a key={l.href} href={l.href} onClick={() => setMobileOpen(false)} className="text-sm text-slate-600 hover:text-slate-900 py-2 transition-colors" data-testid={`mobile-nav-${l.label.toLowerCase().replace(/\s+/g, '-')}`}>{l.label}</a>
+              ))}
+              <a href="#contact" onClick={() => setMobileOpen(false)} className="bg-slate-900 text-white text-sm font-medium px-5 py-2.5 rounded-full text-center hover:bg-slate-800 active:scale-95 transition-all mt-1" data-testid="mobile-nav-cta">
+                Get Early Access
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
+  );
+};
 
 /* ───────────────────────────── PHONE MOCKUP ───────────────────────────── */
 const PhoneMockup = () => (
