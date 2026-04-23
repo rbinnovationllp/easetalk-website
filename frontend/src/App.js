@@ -16,9 +16,9 @@ const Navigation = () => {
 
   return (
     <nav className="glass-nav fixed top-0 left-0 right-0 z-50" data-testid="navigation">
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-6 h-28 flex items-center justify-between">
         <a href="#hero" className="flex items-center gap-2" data-testid="nav-logo">
-          <img src="/easetalk-logo.png" alt="EaseTalk Logo" className="h-12 w-auto" />
+          <img src="/easetalk-logo.png" alt="EaseTalk Logo" className="h-24 w-auto" />
         </a>
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((l) => (
@@ -146,6 +146,15 @@ const HeroSection = () => (
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            className="flex justify-center lg:justify-start mb-8"
+          >
+            <img src="/easetalk-logo.png" alt="EaseTalk - Communication. Connection. Inclusion. For Deaf & Mute Users" className="h-44 sm:h-52 w-auto" data-testid="hero-logo" />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.05 }}
           >
             <div className="inline-flex items-center gap-2 bg-slate-100 text-slate-600 text-xs font-medium px-4 py-2 rounded-full mb-8" data-testid="hero-badge">
               <Sparkles className="w-3.5 h-3.5 text-purple-500" />
@@ -508,7 +517,7 @@ const Footer = () => (
       <div className="flex flex-col items-center text-center gap-8">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <img src="/easetalk-logo.png" alt="EaseTalk Logo" className="h-12 w-auto" />
+          <img src="/easetalk-logo.png" alt="EaseTalk Logo" className="h-32 w-auto" />
         </div>
 
         {/* Links */}
