@@ -1,0 +1,78 @@
+{
+  "project_name": "EaseTalk Landing Page",
+  "theme": "light",
+  "archetype": "Swiss & High-Contrast mixed with Soft SaaS Gradients",
+  "mood": "Minimal, Trustworthy, Accessible, Futuristic, Premium",
+  "fonts": {
+    "heading": "Outfit",
+    "body": "Manrope",
+    "instructions": "Use Outfit for all headings with tracking-tight or tracking-tighter for larger sizes. Use Manrope for clean, highly legible body text. Do not use Inter for headings."
+  },
+  "colors": {
+    "background": "bg-white",
+    "surface": "bg-slate-50",
+    "surface_glass": "bg-white/70 backdrop-blur-xl border border-white/40",
+    "primary_text": "text-slate-900",
+    "secondary_text": "text-slate-500",
+    "brand_gradient": "bg-gradient-to-r from-blue-500 to-purple-600",
+    "soft_gradient_bg": "bg-gradient-to-b from-blue-50/50 via-purple-50/30 to-white",
+    "accent_blue": "text-blue-600",
+    "accent_purple": "text-purple-600",
+    "cta_button": "bg-slate-900 text-white hover:bg-slate-800",
+    "instructions": "Rely heavily on white space. Gradients should be used as subtle background glows (e.g. absolute positioned blur-3xl divs) or text clips, rather than heavy solid blocks."
+  },
+  "spacing_and_layout": {
+    "general": "Use generous padding. Sections should have py-24 or py-32.",
+    "border_radius": "rounded-3xl for major cards, rounded-full for buttons and pills.",
+    "shadows": "Use soft diffuse shadows: shadow-[0_8px_30px_rgb(0,0,0,0.04)] for cards.",
+    "hero": "Centered layout. Large H1 text-5xl sm:text-6xl+ tracking-tighter. Subheadline text-lg sm:text-xl text-slate-500 max-w-2xl mx-auto.",
+    "features_bento": "Use CSS Grid (grid-cols-1 md:grid-cols-2 lg:grid-cols-4). Mix col-span-2 and col-span-1 to create an asymmetrical bento box layout."
+  },
+  "components": {
+    "navigation": "Sticky, crystal glassmorphism header. Text logo 'EaseTalk' in font-bold text-xl tracking-tight. CTA 'Get Early Access' in navigation.",
+    "hero_section": "Text-heavy top, glowing background blobs (blue and purple blur-3xl). Below the CTA, place a floating UI Phone Mockup using framer-motion.",
+    "smart_apps_section": "Three equal cards. Each card has a subtle gradient icon container, large heading, and soft text. Hover effect: translate-y-[-4px] and shadow-lg.",
+    "why_easetalk_section": "Bento grid of 4 blocks. Use imagery for at least one block to humanize the tech.",
+    "innovation_section": "Dark inverted section or a heavily gradient glowing border card. E.g. bg-slate-900 text-white with a 'Tracing Beam' or glowing purple/blue edge to represent 'Emergent Agent AI'.",
+    "contact_card": "A clean, centered Neumorphic or Glass card. Minimal form inputs (Shadcn UI customized).",
+    "footer": "Simple, huge whitespace (py-20). Minimal links."
+  },
+  "motion_and_interactions": {
+    "hover_states": "All buttons should have a slight scale (active:scale-95) and color shift.",
+    "scroll_reveal": "Use framer-motion to fade in and slightly slide up (y: 20 -> 0) major sections on scroll.",
+    "mockup_animation": "The hero phone mockup should gently float (y: [0, -10, 0]) on an infinite loop."
+  },
+  "media": {
+    "images": [
+      {
+        "url": "https://images.pexels.com/photos/10029382/pexels-photo-10029382.jpeg",
+        "category": "lifestyle",
+        "description": "Woman using sign language, smiling. Use in the 'Why EaseTalk' bento grid to add a human element of accessibility."
+      },
+      {
+        "url": "https://images.pexels.com/photos/7134989/pexels-photo-7134989.jpeg",
+        "category": "background",
+        "description": "Pastel blue/purple abstract gradient. Can be used as a low-opacity background image or masked inside a card."
+      }
+    ],
+    "icons": {
+      "library": "lucide-react",
+      "style": "Use thin stroke-width (1.5) for a premium, lightweight feel."
+    }
+  },
+  "accessibility": {
+    "contrast": "Ensure all text over gradients meets APCA / WCAG standards. Deep slate on light gradients works best.",
+    "motion": "Respect prefers-reduced-motion.",
+    "test_ids": "Include data-testid on all major CTA buttons, form inputs, and navigation links."
+  },
+  "instructions_to_main_agent": [
+    "Build a single-page scrolling application with distinct semantic <section> tags.",
+    "Do NOT use 'Inter' for headings. Use 'Outfit'. Add 'Outfit' and 'Manrope' to your fonts.",
+    "For the Hero Phone Mockup, you can build a CSS-based representation of a phone screen (rounded border, top notch, floating) containing a stylized chat or AI interface to represent 'EaseTalk'. You can also use one of the abstract backgrounds provided to fill it.",
+    "Implement the soft blue/purple highlights using Tailwind radial gradients or absolute div elements with blur-3xl and bg-blue-400/20 behind text.",
+    "In the 'Our 3 Smart Apps' section, name them: 'EaseTalk', 'EaseTalk Alert', and 'EaseTalk Learn' with respective icons.",
+    "In 'Emerging Innovation', highlight the phrase 'Powered by Emergent Agent AI' using a text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600.",
+    "Contact card should use a refined layout, removing bulky default inputs and replacing them with minimal customized Shadcn inputs (e.g. border-b only, or soft rounded inputs with zero shadow).",
+    "Apply data-testid to elements."
+  ]
+}
