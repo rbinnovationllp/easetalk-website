@@ -133,7 +133,6 @@ const Navigation = () => {
     { href: "#why", label: "Why EaseTalk" },
     { href: "#innovation", label: "Innovation" },
     { href: "#contact", label: "Contact" },
-    { href: "/admin", label: "Admin" },
   ];
 
   return (
@@ -636,9 +635,6 @@ const Footer = () => (
           </a>
           <a href="/rules" className="text-sm text-slate-400 hover:text-slate-600 transition-colors">
             Rules & Regulations
-          </a>
-          <a href="/admin" className="text-sm text-slate-400 hover:text-slate-600 transition-colors">
-            Admin Portal
           </a>
         </div>
 

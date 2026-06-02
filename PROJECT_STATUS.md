@@ -19,11 +19,14 @@ Last updated: 2026-06-02
 ## Completed Work
 
 - Existing landing page inspected and kept intact.
-- Laptop admin dashboard added at `/admin`.
+- Laptop admin dashboard added at `/admin` but hidden from public navigation/footer links.
 - Admin dashboard connects to Supabase RPC `easetalk_admin_dashboard_report`.
 - Dashboard requires owner phone number and hidden admin code before showing data.
 - Dashboard shows profiles, active subscriptions, grace, expired, trials, blocked trials and recent subscription activity.
 - Dashboard includes CSV download for scrutiny/reporting.
+- Owner/super admin can appoint authorised admin persons with limited duties.
+- Major add/remove/amend actions now use an owner-consent approval queue before they are treated as approved.
+- Admin dashboard access, authorised admin changes and approval decisions are logged in Supabase audit tables after the updated SQL is run.
 - Google Play download button added to the landing page and download banner.
 - Footer links now open working pages: Privacy Policy, Terms & Conditions, Refund Policy, Support Policy and Rules & Regulations.
 - Google Play URL is configurable from `frontend/public/admin-config.js` / `frontend/build/admin-config.js`.
@@ -34,9 +37,9 @@ Last updated: 2026-06-02
 
 ## Files Added Or Changed
 
-- `frontend/src/AdminDashboard.js` - new web admin dashboard.
+- `frontend/src/AdminDashboard.js` - web admin dashboard with owner verification, limited-admin access and owner approval queue.
 - `frontend/src/LegalPages.js` - website legal/support/rules pages.
-- `frontend/src/App.js` - routes `/admin` and legal pages, and links the footer buttons.
+- `frontend/src/App.js` - routes `/admin` and legal pages; admin route is not publicly linked.
 - `frontend/public/admin-config.js` - Supabase URL/key configuration for Hostinger upload.
 - `frontend/public/.htaccess` - Apache rewrite support for React routes.
 - `supabase_website_visitor_counter.sql` - Supabase setup for public website visit counting.
@@ -62,9 +65,12 @@ Last updated: 2026-06-02
    - `admin-config.js`
    - `.htaccess`
    - `static/` folder
-7. Open `https://www.easetalk.in/admin` and verify owner login.
-8. Open `https://www.easetalk.in` and verify the Google Play button and visitor counter.
-9. Check footer links:
+7. Run the updated `C:\Users\HP\EaseTalk\supabase_admin_role_security.sql` in the mobile app Supabase project so limited authorised admin, owner approval and audit-log functions are created.
+8. Open `https://www.easetalk.in/admin` directly and verify owner login. This link is intentionally hidden from public website navigation.
+9. As owner, create one test authorised admin with limited duties and verify that only assigned cards/data are visible.
+10. As that limited admin, submit one test change request; then log in as owner and approve/reject it from the approval queue.
+11. Open `https://www.easetalk.in` and verify the Google Play button and visitor counter.
+12. Check footer links:
    - `https://www.easetalk.in/privacy`
    - `https://www.easetalk.in/terms`
    - `https://www.easetalk.in/refund`
@@ -77,6 +83,8 @@ Last updated: 2026-06-02
 - Real protection is handled by Supabase RPC verification using owner phone plus hidden admin code.
 - Do not put Supabase service-role key in the website.
 - Do not expose admin data without the `easetalk_admin_dashboard_report` verification function.
+- Limited admins can see only the duty areas selected by owner/super admin.
+- Major data changes should be submitted through the approval queue; owner/super admin gives final consent.
 
 ## Pending / Future Improvements
 
@@ -85,3 +93,4 @@ Last updated: 2026-06-02
 - Optional: remove old Emergent/PostHog scripts if not required for production analytics.
 - Optional: replace the Play Store URL after Google Play listing is fully live if package/listing URL changes.
 - Optional: add Hindi/Kannada versions of website legal pages later if desired.
+- Optional: create a separate owner screen for applying approved change requests automatically after policy is finalized.
