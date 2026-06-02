@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   MessageSquare,
@@ -17,9 +17,113 @@ import {
   Languages,
   Menu,
   X,
+  UsersRound,
 } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
+import AdminDashboard from "@/AdminDashboard";
+import LegalPage, { legalRoutes } from "@/LegalPages";
 import "@/App.css";
+
+const getRuntimeConfig = () => window.EASETALK_ADMIN_CONFIG || {};
+
+const getPlayStoreUrl = () => {
+  const url = String(getRuntimeConfig().playStoreUrl || "").trim();
+  return url && url !== "#" ? url : "";
+};
+
+const getSupabaseConfig = () => {
+  const config = getRuntimeConfig();
+  return {
+    url: String(config.supabaseUrl || process.env.REACT_APP_SUPABASE_URL || "").trim(),
+    anonKey: String(
+      config.supabaseAnonKey || process.env.REACT_APP_SUPABASE_ANON_KEY || ""
+    ).trim(),
+  };
+};
+
+async function recordWebsiteVisit() {
+  const { url, anonKey } = getSupabaseConfig();
+  if (!url || !anonKey) return null;
+
+  const response = await fetch(`${url}/rest/v1/rpc/easetalk_record_website_visit`, {
+    method: "POST",
+    headers: {
+      apikey: anonKey,
+      authorization: `Bearer ${anonKey}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ p_page: window.location.pathname || "/" }),
+  });
+
+  const data = await response.json().catch(() => null);
+  if (!response.ok) return null;
+  return data;
+}
+
+const DownloadButton = ({ variant = "dark", className = "" }) => {
+  const playStoreUrl = getPlayStoreUrl();
+  const enabled = Boolean(playStoreUrl);
+  const baseClass =
+    variant === "light"
+      ? "inline-flex items-center justify-center gap-2 bg-white text-slate-900 font-medium px-8 py-3 rounded-full hover:bg-white/90 active:scale-95 transition-all text-sm"
+      : "inline-flex items-center justify-center gap-2 bg-slate-900 text-white font-medium px-8 py-3.5 rounded-full hover:bg-slate-800 active:scale-95 transition-all text-sm";
+
+  return (
+    <a
+      href={enabled ? playStoreUrl : "#contact"}
+      target={enabled ? "_blank" : undefined}
+      rel={enabled ? "noopener noreferrer" : undefined}
+      className={`${baseClass} ${className}`}
+    >
+      <Play className="w-4 h-4" />
+      {enabled ? "Download on Google Play" : "Google Play Link Coming Soon"}
+    </a>
+  );
+};
+
+const VisitorCounter = () => {
+  const [stats, setStats] = useState(null);
+
+  useEffect(() => {
+    let mounted = true;
+    recordWebsiteVisit()
+      .then((data) => {
+        if (mounted && data) setStats(data);
+      })
+      .catch(() => {});
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const count = Number(stats?.total_visits || 0);
+  const startedAt = stats?.started_at ? new Date(stats.started_at) : null;
+  const updatedAt = stats?.updated_at ? new Date(stats.updated_at) : null;
+
+  return (
+    <section className="py-10 bg-white border-t border-slate-100">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="rounded-2xl border border-slate-100 bg-slate-50 px-6 py-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-3">
+            <div className="h-11 w-11 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
+              <UsersRound className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="text-sm font-bold text-slate-500">Website visitors till date</p>
+              <p className="text-3xl font-black tracking-tight text-slate-900">
+                {count ? count.toLocaleString() : "--"}
+              </p>
+            </div>
+          </div>
+          <div className="text-xs font-semibold text-slate-500 md:text-right">
+            <p>Counting started: {startedAt ? startedAt.toLocaleString() : "after Supabase setup"}</p>
+            <p>Last updated: {updatedAt ? updatedAt.toLocaleString() : "waiting for first live count"}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 const Navigation = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -29,6 +133,7 @@ const Navigation = () => {
     { href: "#why", label: "Why EaseTalk" },
     { href: "#innovation", label: "Innovation" },
     { href: "#contact", label: "Contact" },
+    { href: "/admin", label: "Admin" },
   ];
 
   return (
@@ -51,12 +156,7 @@ const Navigation = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          <a
-            href="#contact"
-            className="hidden sm:inline-flex bg-slate-900 text-white text-sm font-medium px-5 py-2.5 rounded-full hover:bg-slate-800 active:scale-95 transition-all"
-          >
-            Get Early Access
-          </a>
+          <DownloadButton className="hidden sm:inline-flex !px-5 !py-2.5" />
 
           <button
             className="md:hidden p-2 rounded-xl hover:bg-slate-100 transition-colors"
@@ -92,13 +192,9 @@ const Navigation = () => {
                 </a>
               ))}
 
-              <a
-                href="#contact"
-                onClick={() => setMobileOpen(false)}
-                className="bg-slate-900 text-white text-sm font-medium px-5 py-2.5 rounded-full text-center hover:bg-slate-800 active:scale-95 transition-all mt-1"
-              >
-                Get Early Access
-              </a>
+              <div onClick={() => setMobileOpen(false)}>
+                <DownloadButton className="w-full mt-1 !px-5 !py-2.5" />
+              </div>
             </div>
           </motion.div>
         )}
@@ -201,7 +297,7 @@ const HeroSection = () => (
           >
             <div className="inline-flex items-center gap-2 bg-slate-100 text-slate-600 text-xs font-medium px-4 py-2 rounded-full mb-8">
               <Sparkles className="w-3.5 h-3.5 text-purple-500" />
-              Google Play Coming Soon
+              EaseTalk mobile app for assisted communication
             </div>
           </motion.div>
 
@@ -231,13 +327,7 @@ const HeroSection = () => (
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <a
-              href="#apps"
-              className="inline-flex items-center justify-center gap-2 bg-slate-900 text-white font-medium px-8 py-3.5 rounded-full hover:bg-slate-800 active:scale-95 transition-all text-sm"
-            >
-              <Play className="w-4 h-4" />
-              Google Play Coming Soon
-            </a>
+            <DownloadButton />
 
             <a
               href="#contact"
@@ -506,25 +596,19 @@ const ContactSection = () => (
 );
 
 const ComingSoonBanner = () => (
-  <section className="py-16 md:py-20 bg-gradient-to-b from-white to-slate-50">
+  <section id="download" className="py-16 md:py-20 bg-gradient-to-b from-white to-slate-50">
     <div className="max-w-6xl mx-auto px-6">
       <ScrollReveal>
         <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl p-8 md:p-12 text-center relative overflow-hidden">
           <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-3">
-            Google Play Coming Soon
+            Download EaseTalk from Google Play
           </h2>
 
           <p className="text-white/80 text-sm sm:text-base max-w-md mx-auto mb-6">
-            Be among the first to experience the future of accessible communication.
+            Install EaseTalk on Android for speech-to-text, text-to-speech, live captions, name alerts, billing and support.
           </p>
 
-          <a
-            href="mailto:rbinnovationllp@gmail.com"
-            className="inline-flex items-center gap-2 bg-white text-slate-900 font-medium px-8 py-3 rounded-full hover:bg-white/90 active:scale-95 transition-all text-sm"
-          >
-            Notify Me
-            <ArrowRight className="w-4 h-4" />
-          </a>
+          <DownloadButton variant="light" />
         </div>
       </ScrollReveal>
     </div>
@@ -538,14 +622,23 @@ const Footer = () => (
         <img src="/easetalk-logo.png" alt="EaseTalk Logo" className="h-24 w-auto" />
 
         <div className="flex flex-wrap justify-center gap-6">
-          <a href="#privacy" className="text-sm text-slate-400 hover:text-slate-600 transition-colors">
+          <a href="/privacy" className="text-sm text-slate-400 hover:text-slate-600 transition-colors">
             Privacy Policy
           </a>
-          <a href="#terms" className="text-sm text-slate-400 hover:text-slate-600 transition-colors">
-            Terms of Service
+          <a href="/terms" className="text-sm text-slate-400 hover:text-slate-600 transition-colors">
+            Terms & Conditions
           </a>
-          <a href="#support" className="text-sm text-slate-400 hover:text-slate-600 transition-colors">
-            Support
+          <a href="/refund" className="text-sm text-slate-400 hover:text-slate-600 transition-colors">
+            Refund Policy
+          </a>
+          <a href="/support" className="text-sm text-slate-400 hover:text-slate-600 transition-colors">
+            Support Policy
+          </a>
+          <a href="/rules" className="text-sm text-slate-400 hover:text-slate-600 transition-colors">
+            Rules & Regulations
+          </a>
+          <a href="/admin" className="text-sm text-slate-400 hover:text-slate-600 transition-colors">
+            Admin Portal
           </a>
         </div>
 
@@ -558,6 +651,16 @@ const Footer = () => (
 );
 
 function App() {
+  const path = window.location.pathname;
+
+  if (path === "/admin") {
+    return <AdminDashboard />;
+  }
+
+  if (legalRoutes.includes(path)) {
+    return <LegalPage path={path} />;
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
@@ -568,6 +671,7 @@ function App() {
         <InnovationSection />
         <ContactSection />
         <ComingSoonBanner />
+        <VisitorCounter />
       </main>
       <Footer />
     </div>
