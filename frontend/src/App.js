@@ -639,7 +639,7 @@ const Footer = () => (
         </div>
 
         <p className="text-xs text-slate-400">
-          © 2026 EaseTalk. All rights reserved.
+          &copy; 2026 EaseTalk. All rights reserved.
         </p>
       </div>
     </div>
