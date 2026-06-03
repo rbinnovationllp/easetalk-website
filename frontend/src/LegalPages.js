@@ -17,7 +17,8 @@ const legalNote =
 const companyContact = [
   "Rashi Bhartiya Innovation LLP",
   "Bengaluru, Karnataka, India",
-  "Email: rbinnovationllp@gmail.com",
+  "Support: support@easetalk.in",
+  "General information: info@easetalk.in",
   "Website: easetalk.in",
 ];
 
@@ -179,7 +180,7 @@ const PAGE_CONTENT = {
       },
       {
         title: "Contact",
-        body: ["For refund-related assistance, email rbinnovationllp@gmail.com."],
+        body: ["For refund-related assistance, email support@easetalk.in."],
       },
     ],
   },
@@ -211,7 +212,7 @@ const PAGE_CONTENT = {
       },
       {
         title: "Contact",
-        body: ["Support email: rbinnovationllp@gmail.com"],
+        body: ["Support email: support@easetalk.in"],
       },
     ],
   },
@@ -260,7 +261,7 @@ const PAGE_CONTENT = {
       {
         title: "How To Request Deletion",
         body: [
-          "Send an email to rbinnovationllp@gmail.com with the subject line: EaseTalk Account Deletion Request.",
+          "Send an email to support@easetalk.in with the subject line: EaseTalk Account Deletion Request.",
           "Include your name, phone number used in the app, device ID if visible in the app, and any other detail that helps us identify your account-related records.",
           "If you are requesting deletion for a dependent, family member or assisted user, please mention your relationship and provide enough information for verification.",
         ],

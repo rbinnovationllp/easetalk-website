@@ -556,10 +556,10 @@ const ContactSection = () => (
                 <div className="text-left">
                   <p className="text-xs text-slate-400 mb-0.5">Email</p>
                   <a
-                    href="mailto:rbinnovationllp@gmail.com"
+                    href="mailto:info@easetalk.in"
                     className="text-sm text-slate-700 font-medium hover:text-blue-600 transition-colors"
                   >
-                    rbinnovationllp@gmail.com
+                    info@easetalk.in
                   </a>
                 </div>
               </div>
@@ -581,7 +581,7 @@ const ContactSection = () => (
             </div>
 
             <a
-              href="mailto:rbinnovationllp@gmail.com"
+              href="mailto:info@easetalk.in"
               className="w-full inline-flex items-center justify-center gap-2 bg-slate-900 text-white font-medium px-6 py-3 rounded-full hover:bg-slate-800 active:scale-95 transition-all text-sm"
             >
               <Mail className="w-4 h-4" />
@@ -644,9 +644,18 @@ const Footer = () => (
         <div className="space-y-1 text-xs font-semibold text-slate-400">
           <p>Rashi Bhartiya Innovation LLP</p>
           <p>Bengaluru, Karnataka, India</p>
-          <a href="mailto:rbinnovationllp@gmail.com" className="hover:text-slate-600 transition-colors">
-            rbinnovationllp@gmail.com
-          </a>
+          <p>
+            Support:{" "}
+            <a href="mailto:support@easetalk.in" className="hover:text-slate-600 transition-colors">
+              support@easetalk.in
+            </a>
+          </p>
+          <p>
+            Info:{" "}
+            <a href="mailto:info@easetalk.in" className="hover:text-slate-600 transition-colors">
+              info@easetalk.in
+            </a>
+          </p>
         </div>
 
         <p className="text-xs text-slate-400">

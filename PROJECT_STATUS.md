@@ -32,7 +32,7 @@ Last updated: 2026-06-03
 - Website legal pages expanded into stronger official English legal versions covering microphone/audio processing, STT/TTS, AI-generated content, subscriptions, trial abuse prevention, device ID, accessibility disclaimers, third-party services and user rights.
 - Official legal note added to legal pages: English is the official version, Hindi/Kannada translations may be provided for convenience, and English prevails if there is any conflict.
 - Account Deletion page added at `/delete-account` for Google Play account deletion compliance.
-- Footer now displays Rashi Bhartiya Innovation LLP, Bengaluru, Karnataka, India and support email `rbinnovationllp@gmail.com`.
+- Footer now displays Rashi Bhartiya Innovation LLP, Bengaluru, Karnataka, India, support email `support@easetalk.in` and general information email `info@easetalk.in`.
 - Google Play URL is configurable from `frontend/public/admin-config.js` / `frontend/build/admin-config.js`.
 - Website visitor counter added using Supabase RPC `easetalk_record_website_visit`.
 - Vercel rewrite support retained so `/admin`, `/privacy`, `/terms`, `/refund`, `/support`, `/rules` and `/delete-account` can be opened directly.
