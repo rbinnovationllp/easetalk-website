@@ -636,6 +636,17 @@ const Footer = () => (
           <a href="/rules" className="text-sm text-slate-400 hover:text-slate-600 transition-colors">
             Rules & Regulations
           </a>
+          <a href="/delete-account" className="text-sm text-slate-400 hover:text-slate-600 transition-colors">
+            Account Deletion
+          </a>
+        </div>
+
+        <div className="space-y-1 text-xs font-semibold text-slate-400">
+          <p>Rashi Bhartiya Innovation LLP</p>
+          <p>Bengaluru, Karnataka, India</p>
+          <a href="mailto:rbinnovationllp@gmail.com" className="hover:text-slate-600 transition-colors">
+            rbinnovationllp@gmail.com
+          </a>
         </div>
 
         <p className="text-xs text-slate-400">
