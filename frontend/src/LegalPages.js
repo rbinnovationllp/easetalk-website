@@ -16,7 +16,7 @@ const legalNote =
 
 const companyContact = [
   "Rashi Bhartiya Innovation LLP",
-  "Bengaluru, Karnataka, India",
+  "Bengaluru, Karnataka and Gurugram, Haryana, India",
   "Support: support@easetalk.in",
   "General information: info@easetalk.in",
   "Website: easetalk.in",

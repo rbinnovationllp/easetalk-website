@@ -135,10 +135,32 @@ const Navigation = () => {
     { href: "#contact", label: "Contact" },
   ];
 
+  const navigateToSection = (event, href) => {
+    event.preventDefault();
+    const sectionId = href.replace("#", "");
+
+    setMobileOpen(false);
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        const section = document.getElementById(sectionId);
+        if (!section) return;
+
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+        window.history.replaceState(null, "", href);
+      });
+    });
+  };
+
   return (
     <nav className="glass-nav fixed top-0 left-0 right-0 z-50" data-testid="navigation">
       <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="#hero" className="flex items-center gap-2" data-testid="nav-logo">
+        <a
+          href="#hero"
+          onClick={(event) => navigateToSection(event, "#hero")}
+          className="flex items-center gap-2"
+          data-testid="nav-logo"
+        >
           <img src="/easetalk-logo.png" alt="EaseTalk Logo" className="h-16 w-auto" />
         </a>
 
@@ -147,6 +169,7 @@ const Navigation = () => {
             <a
               key={link.href}
               href={link.href}
+              onClick={(event) => navigateToSection(event, link.href)}
               className="text-sm text-slate-500 hover:text-slate-900 transition-colors"
             >
               {link.label}
@@ -184,7 +207,7 @@ const Navigation = () => {
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(event) => navigateToSection(event, link.href)}
                   className="text-sm text-slate-600 hover:text-slate-900 py-2 transition-colors"
                 >
                   {link.label}
@@ -268,7 +291,7 @@ const PhoneMockup = () => (
 const HeroSection = () => (
   <section
     id="hero"
-    className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden"
+    className="relative min-h-screen scroll-mt-20 flex items-center justify-center pt-20 overflow-hidden"
   >
     <div className="absolute top-20 left-1/4 w-[500px] h-[500px] bg-blue-400/15 rounded-full blur-3xl pointer-events-none" />
     <div className="absolute top-40 right-1/4 w-[400px] h-[400px] bg-purple-400/15 rounded-full blur-3xl pointer-events-none" />
@@ -374,7 +397,7 @@ const smartApps = [
 ];
 
 const SmartAppsSection = () => (
-  <section id="apps" className="relative py-24 md:py-32">
+  <section id="apps" className="relative scroll-mt-20 py-24 md:py-32">
     <div className="max-w-6xl mx-auto px-6">
       <ScrollReveal>
         <div className="text-center mb-16">
@@ -456,7 +479,7 @@ const features = [
 ];
 
 const WhySection = () => (
-  <section id="why" className="relative py-24 md:py-32 bg-gradient-to-b from-slate-50/80 to-white">
+  <section id="why" className="relative scroll-mt-20 py-24 md:py-32 bg-gradient-to-b from-slate-50/80 to-white">
     <div className="max-w-6xl mx-auto px-6">
       <ScrollReveal>
         <div className="text-center mb-16">
@@ -498,7 +521,7 @@ const WhySection = () => (
 );
 
 const InnovationSection = () => (
-  <section id="innovation" className="relative py-24 md:py-32 bg-slate-900 overflow-hidden">
+  <section id="innovation" className="relative scroll-mt-20 py-24 md:py-32 bg-slate-900 overflow-hidden">
     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[2px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[2px] bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
 
@@ -530,7 +553,7 @@ const InnovationSection = () => (
 );
 
 const ContactSection = () => (
-  <section id="contact" className="relative py-24 md:py-32">
+  <section id="contact" className="relative scroll-mt-20 py-24 md:py-32">
     <div className="max-w-6xl mx-auto px-6">
       <ScrollReveal>
         <div className="text-center mb-12">
@@ -643,7 +666,7 @@ const Footer = () => (
 
         <div className="space-y-1 text-xs font-semibold text-slate-400">
           <p>Rashi Bhartiya Innovation LLP</p>
-          <p>Bengaluru, Karnataka, India</p>
+          <p>Bengaluru, Karnataka and Gurugram, Haryana, India</p>
           <p>
             Support:{" "}
             <a href="mailto:support@easetalk.in" className="hover:text-slate-600 transition-colors">
